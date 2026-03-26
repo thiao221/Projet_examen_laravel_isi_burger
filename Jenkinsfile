@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "isi-burger-app:${env.BUILD_NUMBER}"
     }
-
+        //test
     stages {
         stage('Pull du Code') {
             steps {
