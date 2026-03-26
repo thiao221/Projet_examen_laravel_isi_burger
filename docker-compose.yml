@@ -1,16 +1,14 @@
 version: '3.8'
 services:
-    # Le serveur Web (Ton code Laravel)
     app:
         build: .
         ports:
-            - "8080:80"
+            - "8000:80"
         volumes:
             - .:/var/www/html
         depends_on:
-            - db
+            - db  # Doit correspondre exactement au nom ci-dessous
 
-    # La base de données PostgreSQL
     db:
         image: postgres:15
         environment:
