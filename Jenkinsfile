@@ -12,7 +12,7 @@ pipeline {
                 checkout scm
             }
         }
-
+            //test
         stage('Installation Laravel') {
             steps {
                 // On installe les dépendances PHP sans interaction
