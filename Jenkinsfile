@@ -16,7 +16,7 @@ pipeline {
         stage('Installation Laravel') {
             steps {
                 // On installe les dépendances PHP sans interaction
-                sh 'composer install --no-interaction --prefer-dist --optimize-autoloader'
+                bat 'composer install --no-interaction --prefer-dist --optimize-autoloader'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     // On construit l'image à partir du Dockerfile que tu as créé
-                    sh "docker build -t ${DOCKER_IMAGE} ."
+                    bat "docker build -t ${DOCKER_IMAGE} ."
                 }
             }
         }
