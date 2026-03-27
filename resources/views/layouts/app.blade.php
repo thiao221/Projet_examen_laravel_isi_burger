@@ -23,10 +23,10 @@
                 @if(auth()->user()->isGestionnaire())
 {{--                    <a href="{{ route('admin.stats.index') }}" class="hover:underline">Dashboard</a>--}}
                     <a href="{{ route('admin.products.index') }}" class="hover:underline">Produits</a>
-{{--                    <a href="{{ route('admin.orders.index') }}" class="hover:underline">Commandes</a>--}}
+                    <a href="{{ route('admin.orders.index') }}" class="hover:underline">Commandes</a>
                 @else
                     <a href="{{ route('products.index') }}" class="hover:underline">Catalogue</a>
-{{--                    <a href="{{ route('orders.my') }}" class="hover:underline">Mes commandes</a>--}}
+                    <a href="{{ route('orders.my') }}" class="hover:underline">Mes commandes</a>
                 @endif
 
                 {{-- Nom + Déconnexion --}}

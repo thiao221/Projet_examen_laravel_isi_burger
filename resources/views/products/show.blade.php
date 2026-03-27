@@ -35,7 +35,7 @@
         <p class="text-sm text-gray-400 mt-2">Stock disponible : {{ $product->stock }}</p>
 
         {{-- Bouton Commander --}}
-        <form method="POST"  class="mt-6">
+        <form method="POST" action="{{ route('orders.store') }}">
             @csrf
             <input type="hidden" name="items[0][product_id]" value="{{ $product->id }}">
             <div class="flex items-center gap-4">
