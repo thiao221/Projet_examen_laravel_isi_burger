@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderReady;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -35,9 +37,26 @@ class OrderController extends Controller
         $ancienStatut = $order->status;
         $order->update(['status' => $request->status]);
 
-        // Si la commande passe à "prete" → envoyer email + PDF (Sprint 4)
+        // Si statut passe à "prete" → générer PDF et envoyer email
         if ($request->status === 'prete' && $ancienStatut !== 'prete') {
-            // envoyer email avec facture PDF
+
+            $order->load(['user', 'items.product', 'payment']);
+
+            // Générer le PDF
+            $pdf = Pdf::loadView('pdf.invoice', compact('order'));
+            $pdfPath = storage_path('app/public/factures/facture-' . $order->id . '.pdf');
+
+            // Créer le dossier si inexistant
+            if (!file_exists(dirname($pdfPath))) {
+                mkdir(dirname($pdfPath), 0755, true);
+            }
+
+            // Sauvegarder le PDF
+            $pdf->save($pdfPath);
+
+            // Envoyer l'email avec le PDF en pièce jointe
+            Mail::to($order->user->email)
+                ->send(new OrderReady($order, $pdfPath));
         }
 
         return back()->with('success', 'Statut mis à jour : ' . Order::STATUTS[$request->status]);

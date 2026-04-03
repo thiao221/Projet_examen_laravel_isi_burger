@@ -86,6 +86,43 @@
                 </p>
             </div>
         @endif
+        {{-- Enregistrer un paiement --}}
+        @if(in_array($order->status, ['prete', 'en_preparation', 'en_attente']) && !$order->payment)
+            <div class="bg-white rounded-lg shadow p-6 mt-4">
+                <h2 class="font-bold text-gray-700 mb-3">Enregistrer le paiement</h2>
+
+                <form method="POST" action="{{ route('admin.orders.pay', $order) }}"
+                      class="flex gap-4 items-center">
+                    @csrf
+
+                    <div class="flex-1">
+                        <label class="block text-sm text-gray-600 mb-1">Montant reçu (FCFA)</label>
+                        <input type="number" name="amount"
+                               value="{{ $order->total }}"
+                               class="w-full border rounded px-3 py-2">
+                    </div>
+
+                    <div class="pt-5">
+                        <button type="submit"
+                                class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 font-semibold">
+                            Valider le paiement
+                        </button>
+                    </div>
+                </form>
+            </div>
+        @endif
+
+        {{-- Paiement déjà enregistré --}}
+        @if($order->payment)
+            <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
+                <p class="text-green-700 font-semibold">
+                    Paiement enregistré le {{ $order->payment->paid_at->format('d/m/Y à H:i') }}
+                </p>
+                <p class="text-green-600">
+                    Montant : {{ number_format($order->payment->amount, 0, ',', ' ') }} FCFA — Espèces
+                </p>
+            </div>
+        @endif
     </div>
 
 @endsection

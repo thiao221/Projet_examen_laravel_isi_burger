@@ -60,8 +60,8 @@ class Order extends Model
     }
 
     // Un order a un seul paiement
-//    public function payment()
-//    {
-//        return $this->hasOne(Payment::class);
-//    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }
