@@ -21,7 +21,7 @@
         <div class="flex items-center gap-6">
             @auth
                 @if(auth()->user()->isGestionnaire())
-{{--                    <a href="{{ route('admin.stats.index') }}" class="hover:underline">Dashboard</a>--}}
+                    <a href="{{ route('admin.stats.index') }}" class="hover:underline">Dashboard</a>
                     <a href="{{ route('admin.products.index') }}" class="hover:underline">Produits</a>
                     <a href="{{ route('admin.orders.index') }}" class="hover:underline">Commandes</a>
                 @else
@@ -62,7 +62,9 @@
 {{-- Contenu de la page --}}
 <main class="max-w-7xl mx-auto px-4 py-8">
     @yield('content')
+
 </main>
+    @stack('scripts')
 
 </body>
 </html>

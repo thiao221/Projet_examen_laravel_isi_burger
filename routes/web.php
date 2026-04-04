@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\StatsController;
 use Illuminate\Support\Facades\Route;
 
 // Accueil : Redirige vers le catalogue des burgers
@@ -55,6 +56,10 @@ Route::middleware(['auth', 'role:gestionnaire'])
         // Paiement
         Route::post('/orders/{order}/pay', [\App\Http\Controllers\PaymentController::class, 'store'])
             ->name('orders.pay');
+
+        // Dashboard
+        Route::get('/stats', [ StatsController::class, 'index'])->name('stats.index');
+        Route::get('/stats/chart-data', [StatsController::class, 'chartData'])->name('stats.chart');
     });
 
 require __DIR__.'/auth.php';
